@@ -1,0 +1,62 @@
+version: '3.7'
+ 
+services:
+  # backend service
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-spring
+    environment:
+      USERNAME: root
+      PASSWORD: root
+      DB : mongodb
+      HOST: 172.20.0.2
+      PORT: 27017
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - mongodb 
+    networks:
+      - network1
+
+ 
+  # frontend service 
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-angular
+      args:
+        API_BASE_URL: http://localhost:8080/
+    ports:
+      - "4201:80"
+    restart: always
+    depends_on:
+      - backend
+    networks:
+      - network1
+
+  # Database Service (Mongodb)
+  mongodb:
+    image: bitnami/mongodb:latest
+    restart: always
+    environment:
+      MONGODB_ROOT_PASSWORD: root
+      MONGODB_AUTHENTICATION_DATABASE: admin
+      MONGODB_USERNAME: admin
+      MONGODB_PASSWORD: root
+      MONGODB_DATABASE: my_database
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      network1:
+        ipv4_address: 172.20.0.2
+volumes:
+  mongodb_data_container:
+
+networks:
+  network1:
+    external: true
+    

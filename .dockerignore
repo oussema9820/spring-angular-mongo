@@ -1,0 +1,4 @@
+angular-app/node-modules
+node_modules
+.git
+.gitignore

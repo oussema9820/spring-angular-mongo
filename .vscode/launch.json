@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringDataMongoApplication<spring-data-mongo>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.huxium.SpringDataMongoApplication",
+            "projectName": "spring-data-mongo",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
